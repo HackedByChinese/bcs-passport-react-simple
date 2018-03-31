@@ -1,18 +1,27 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import "./App.css";
+
+import LoginPage from './LoginPage';
+import CreateAccountPage from "./CreateAccountPage";
+import HomePage from "./HomePage";
+import ProtectedRoute from './protectedRoute';
+import MembersOnlyPage from "./MembersOnlyPage";
+import LoginRequiredPage from './LoginRequiredPage';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/create" component={CreateAccountPage} />
+            <Route exact path="/loginrequired" component={LoginRequiredPage} />
+            <ProtectedRoute exact path="/membersonly" redirectTo="/loginrequired" component={MembersOnlyPage} />
+          </Switch>
+        </Router>
       </div>
     );
   }
